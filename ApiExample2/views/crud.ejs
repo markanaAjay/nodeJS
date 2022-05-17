@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <title>Dashboard</title>
+
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <link rel="shortcut icon" href=" ">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
+  </head>
+  
+  <body>
+
+  <div class="w3-container w3-blue-grey" style = "border: double">
+      <div class="col-sm-10">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Enter Product Detail</label>
+        <input type="text" class="form-control" id="id" name="OrderId" placeholder="OrderId">
+        <input type="number" class="form-control" id="amt" name="OrderAmount" placeholder="OrderAmount">
+        <input type="text" class="form-control" id="name" name="Name" placeholder="Name">
+        <input type="text" class="form-control" id="add" name="Address" placeholder="Address">
+        <input type="text" class="form-control" id="city" name="City" placeholder="City">
+        <input type="text" class="form-control" id="state" name="State" placeholder="State">
+        <input type="number" class="form-control" id="code" name="ZipCode" placeholder="ZipCode">
+        <input type="number" class="form-control" id="phone" name="PhoneNumber" placeholder="PhoneNumber">
+        <input type="text" class="form-control" id="mail" name="Email" placeholder="Email">
+        <input type="text" class="form-control" id="tknum" name="TrackingNumber" placeholder="TrackingNumber">
+        <div id="createdata"><h2></h2></div>
+        <button class="w3-container w3-teal" id="create" type="submit" >Create</Button>
+      </div>
+  </div>
+  <br>
+
+  <div class="w3-container w3-blue-grey" style = "border: double">
+      <div class="col-sm-10">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Get Data</label>
+        <br>
+        <button class="w3-container w3-teal" id="read" type="submit" >Read</Button>
+        <div id="output"></div>
+      </div>
+  </div>
+  <br>
+
+
+  <div class="w3-container w3-blue-grey" style = "border: double">
+      <div class="col-sm-10">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Update</label>
+        <input type="text" class="form-control" id="oid" name="OrderId" placeholder="OrderId">
+        <input type="text" class="form-control" id="nam" name="Name" placeholder="Name to Update">
+        <div id="updatedata"><h2></h2></div>
+        <br>
+        <button class="w3-container w3-teal" id="update" >Update</Button>
+      </div>
+  </div>
+  <br>
+
+  <div class="w3-container w3-blue-grey" style = "border: double">
+      <div class="col-sm-10">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Delete</label>
+        <input type="text" class="form-control" id="names" name="Name" placeholder="Name">
+        <div id="deletedata"><h2></h2></div>
+        <br>
+        <button class="w3-container w3-teal" id="delete">Delete</Button>
+      </div>
+  </div>
+  <br>
+
+      <script>
+          $(document).ready(function(){
+
+
+          $("#create").on('click', function(e){
+            let data = {
+              OrderId:$("#id").val(),
+              OrderAmount:$("#amt").val(),
+              Name : $("#name").val(),
+              Address : $("#add").val(),
+              City:$("#city").val(),
+              State:$("#state").val(),
+              ZipCode:$("#code").val(),
+              PhoneNumber:$("#phone").val(),
+              Email:$("#mail").val(),
+              TrackingNumber:$("#tknum").val()
+              }
+              console.log(data);
+
+            if(data){
+              $.ajax({
+                type: 'post',
+                url: '/productOrder/',
+                data: data,
+                headers: {"Authorization": localStorage.getItem('token')},
+                success:function(result,status,xhr){
+                  console.log(result);
+                  swal({
+                    title: "Good job!",
+                    text: "Data is Created And Added To DataBase!",
+                    icon: "success",
+                  });
+                  $("#createdata").html(result);
+                },
+                error: function(error){
+                  console.log(error);
+                  swal({
+                    title: "bad job!",
+                    text: "data is not created due to error!",
+                    icon: "error",
+                  });
+                }
+              })
+          }
+          else{
+            swal({
+              title: "bad job!",
+              text: "Enter proper data!",
+              icon: "error",
+            });          
+          }
+          })
+
+          $("#read").on("click",function(e){
+            $.ajax({
+              type:"get",
+              url:"/productOrder/",
+              dataType: 'json',
+              success:function(result,status,xhr){
+                console.log(result);
+                window.location.assign("http://localhost:8000/forms/datatable");
+              },
+              error: function(error){
+                console.log(error);
+                swal({
+                  title: "bad job!",
+                  text: "Not be able to fetch data!",
+                  icon: "error",
+                });            
+              }
+            })
+
+          })
+
+          $("#update").on("click",function(e){
+            let tokenData = localStorage.getItem("token");
+
+            let data = {
+              OrderId:$("#oid").val(),
+              Name:$("#nam").val()
+            }
+            console.log(data);
+
+            if(data){
+              $.ajax({
+                type:"put",
+                url:"/productOrder/update",
+                data:data,
+                headers: {"Authorization": localStorage.getItem('token')},
+                success:function(result,status,xhr){
+                  console.log(result);
+                  swal({
+                    title: "Good job!",
+                    text: "Data is Updated!",
+                    icon: "success",
+                  });               
+                  $("#updatedata").html(result);
+                },
+                error: function(error){
+                  console.log(error);
+                  swal({
+                    title: "bad job!",
+                    text: "Data is not updated!",
+                    icon: "error",
+                });            }
+              })
+          }
+          else{
+            swal({
+              title: "bad job!",
+              text: "Enter proper or valid data!",
+              icon: "error",
+            });         
+          }
+          })
+
+
+          $("#delete").on("click",function(e){
+            console.log("in delete");
+            let data={
+              Name:$("#names").val()
+            }
+            if(data){
+              $.ajax({
+                type:"delete",
+                url:"/productOrder/delete",
+                data:data,
+                headers: {"Authorization": localStorage.getItem('token')},
+                success:function(result,status,xhr){
+                  console.log(result);
+                  swal({
+                    title: "Good job!",
+                    text: "Data is deleted!",
+                    icon: "success",
+                  });                
+                $("#deletedata").html(result);
+                },
+              error: function(error){
+                console.log(error);
+                alert("Data is not Deleted due to Error");
+              }
+            })
+          }
+          else{
+              swal({
+              title: "bad job!",
+              text: "Enter Valid Name!",
+              icon: "error",
+              });          
+          }
+          })
+
+        })
+
+    </script>
+
+  </body>
+  
+</html>

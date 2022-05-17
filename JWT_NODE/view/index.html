@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+</head>
+
+<body>
+    <form action="/data" method="post">
+        <input type="number" name="id" placeholder="id" required><br>
+        <input type="text" name="name" placeholder="name" required><br>
+        <label for="product">Choose a product:</label>
+        <select name="proname" id="products"><br>
+            <option value="pc">pc</option>
+            <option value="laptop">laptop</option>
+            <option value="mobile">mobile</option>
+        </select>
+        <input type="number" name="price" placeholder="price" required><br>
+        <input type="number" name="quantity" placeholder="quantity" required><br>
+        <input type="date" name="date" placeholder="orderdate" required><br>
+        <input type="text" name="city" placeholder="city" required><br>
+        <input type="submit" value="PlaceOrder">
+    </form><br>
+    <a href="/read.html"><button type="button">ReadData</button></a>
+    <a href="/update.html"><button type="button">UpdateData</button></a>
+    <a href="/delete.html"><button type="button">DeleteData</button></a>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <title>JWT-Authentication</title>
+
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+   
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+   <link rel="shortcut icon" href=" ">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.1/web3.min.js"></script>
+    
+  </head>
+  
+  <body>
+
+
+  <form method="POST" action="/productOrder/">
+  <div class="w3-container w3-blue-grey" style = "border: double">
+      <div class="col-sm-10">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Enter Product Detail</label>
+        <input type="text" class="form-control" name="OrderId" placeholder="OrderId">
+        <input type="number" class="form-control" name="OrderAmount" placeholder="OrderAmount">
+        <input type="text" class="form-control" name="Name" placeholder="Name">
+        <input type="text" class="form-control" name="Address" placeholder="Address">
+        <input type="text" class="form-control" name="City" placeholder="City">
+        <input type="text" class="form-control" name="State" placeholder="State">
+        <input type="number" class="form-control" name="ZipCode" placeholder="ZipCode">
+        <input type="number" class="form-control" name="PhoneNumber" placeholder="PhoneNumber">
+        <input type="text" class="form-control" name="Email" placeholder="Email">
+        <input type="text" class="form-control" name="TrackingNumber" placeholder="TrackingNumber">
+        <button class="w3-container w3-teal" type="submit" >Create</Button>
+      </div>
+      </div>
+      <br>
+      </form>
+
+  <form method="GET" action="/productOrder/">
+  <div class="w3-container w3-blue-grey" style = "border: double">
+      <div class="col-sm-10">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Get Data</label>
+        <br>
+        <button class="w3-container w3-teal" type="submit" >Read</Button>
+      </div>
+      </div>
+      <br>
+      </form>
+
+
+      <form method="get" action="/productOrder/update">
+  <div class="w3-container w3-blue-grey" style = "border: double">
+      <div class="col-sm-10">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Update</label>
+        <input type="text" class="form-control" name="OrderId" placeholder="OrderId">
+        <input type="text" class="form-control" name="Name" placeholder="Name to Update">
+
+        <br>
+        <button class="w3-container w3-teal" type="submit" >Update</Button>
+      </div>
+      </div>
+      <br>
+      </form>
+
+    <form method="get" action="/productOrder/delete">
+  <div class="w3-container w3-blue-grey" style = "border: double">
+      <div class="col-sm-10">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Delete</label>
+        <input type="text" class="form-control" name="Name" placeholder="Name">
+
+        <br>
+        <button class="w3-container w3-teal" type="submit" >Delete</Button>
+      </div>
+      </div>
+      <br>
+      </form>
+
+  
+  </body>
+  
+  
+  </html>
