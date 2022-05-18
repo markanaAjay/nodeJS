@@ -3,26 +3,26 @@ const {User} = require('../../../models/');
 
 const auth = async (req, res, next) => {
     try {
-        //const token = req.headers["token"];
         let token = req.header('Authorization');
         //let token = req.session.token;
         console.log(token);
         token = String(token)
+
+
         let decoded = jwt.verify(token, "avm");
         const user = await User.findOne({ sEmail: decoded.email})
 
-        //const users = await {email:verified.email};  
-        /*if (!user) {
-            throw new Error()
-        }
-
-        
-        req.token = token
-        req.user = user*/
+        if(decoded.sEmail == req.session.email || req.session.uType == "admin" || user.uType == "admin"){
         console.log("user :   ",user);
         //console.log("users : ",users);
         console.log(decoded);
         next()
+        }
+        else{
+            res.status(400).json({
+                message:"Unauthorized"
+            })
+        }
     } catch (e) {
         console.log(e);
 
@@ -31,4 +31,4 @@ const auth = async (req, res, next) => {
     }
 }
 
-module.exports = {auth};
+module.exports = auth;

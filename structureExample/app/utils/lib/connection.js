@@ -8,7 +8,7 @@ function MongoDB(){
 MongoDB.prototype.initialize = async function(){
 
 	try{
-		await mongoose.connect("mongodb+srv://ajay:ajay@cluster0.epbl6.mongodb.net/structure?retryWrites=true&w=majority",{
+		await mongoose.connect("mongodb+srv://ajay:ajay@cluster0.epbl6.mongodb.net/node?retryWrites=true&w=majority",{
 			useNewUrlParser: true,
   			useUnifiedTopology: true,
 		})

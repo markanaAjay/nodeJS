@@ -11,7 +11,7 @@ updateControllers.update = async(req,res) =>{
 
         console.log(req.body);
        
-        const data =await  User.findOneAndUpdate({"email": req.body.email}, {$set:{"name":req.body.name}});
+        const data =await  User.findOneAndUpdate({"sEmail": req.body.email}, {$set:{"sName":req.body.name}});
         console.log("data : ",data);
 
         if(!data){

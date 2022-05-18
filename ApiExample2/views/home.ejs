@@ -53,18 +53,50 @@
             <div class="modal-body">
               <form>
                 <div class="mb-3">
-                  <label for="recipient-name" class="col-form-label">Recipient:</label>
-                  <input type="text" class="form-control" id="recipient-name">
+                  <label for="recipient-name" class="col-form-label">OrderId:</label>
+                  <input type="text" class="form-control" id="orderid">
                 </div>
                 <div class="mb-3">
-                  <label for="message-text" class="col-form-label">Message:</label>
-                  <textarea class="form-control" id="message-text"></textarea>
+                  <label for="recipient-name" class="col-form-label">OrderAmount:</label>
+                  <input type="text" class="form-control" id="orderamount">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Name:</label>
+                  <input type="text" class="form-control" id="name">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Address:</label>
+                  <input type="text" class="form-control" id="address">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">City:</label>
+                  <input type="text" class="form-control" id="city">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">State:</label>
+                  <input type="text" class="form-control" id="state">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">ZipCode:</label>
+                  <input type="text" class="form-control" id="zipcode">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">PhoneNumber:</label>
+                  <input type="text" class="form-control" id="phonenumber">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Email:</label>
+                  <input type="text" class="form-control" id="email">
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">TrackingNumber:</label>
+                  <input type="text" class="form-control" id="trackingnumber">
                 </div>
               </form>
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Send message</button>
+            <button type="button" class="btn btn-primary" id="updateBTN">Update</button>
           </div>
         </div>
       </div>
@@ -99,7 +131,7 @@
                   { "mData": null ,
                     render:function (data, type, row)
                     {
-                      return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Edit</button>`;
+                      return `<button type="button" class="update btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="Order">Edit</button>`;
                     },
                   },
     
@@ -144,8 +176,62 @@
               })
 
             });
-            $("#tableData").on("click",".btn",function(e){
-              console.log("edit is clicked");
+            $("#tableData").on("click",".update",function(e){
+              console.log(data);
+              let orderid = data.OrderId;
+              let orderamount = data.OrderAmount;
+              let name = data.Name;
+              let address = data.Address;
+              let city = data.City;
+              let state = data.State;
+              let zipcode = data.ZipCode;
+              let phonenumber = data.PhoneNumber;
+              let email = data.Email;
+              let trackingnumber = data.TrackingNumber;
+
+              $("#orderid").val(orderid);
+              $("#orderamount").val(orderamount);
+              $("#name").val(name);
+              $("#address").val(address);
+              $("#city").val(city);
+              $("#state").val(state);
+              $("#zipcode").val(zipcode);
+              $("#phonenumber").val(phonenumber);
+              $("#email").val(email);
+              $("#trackingnumber").val(trackingnumber);
+              
+              //console.log("edit is clicked");
+            })
+
+            $("#updateBTN").click(() => {
+              let updatedData = {
+                OrderId:$("#orderid").val(),
+                OrderAmount:$("#orderamount").val(),
+                Name: $("#name").val(),
+                Address:$("#address").val(),
+                City:$("#city").val(),
+                State:$("#state").val(),
+                ZipCode:$("#zipcode").val(),
+                PhoneNumber:$("#phonenumber").val(),
+                Email:$("#email").val(),
+                TrackingNumber:$("#trackingnumber").val()
+              }
+              console.log(updatedData);
+
+              $.ajax({
+                method:"PUT",
+                url:"/productOrder/updateOrder",
+                data:updatedData,
+                success:function(result,status,xhr){
+                  console.log(result);
+                  alert("Data Updated")             
+                },
+                error: function(error){
+                  console.log(error);
+                  alert("Data is not updated");           
+                }
+              })
+
 
             })
 
