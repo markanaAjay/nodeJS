@@ -9,7 +9,20 @@ const adminControllers = {}
 adminControllers.getData = async(req,res)=>{
 	try{
 
-		const data = await User.find();
+		const data = await User.aggregate([{
+			$match: {
+				uType: "user",
+			},
+		},
+		{
+			$project: {
+				uType: 0,
+				_id: 0,
+				__v: 0,
+				sPassword: 0,
+			},
+		},
+	]);
         console.log(data);
 				
 		return res.status(200).json({
