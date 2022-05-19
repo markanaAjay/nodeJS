@@ -10,6 +10,8 @@ aRouter.post("/SignIn", userControllers.signIn);
 
 aRouter.post("/SignUp",userControllers.signUp);
 
+aRouter.post("/logOut",userControllers.logOut);
+
 aRouter.post("/validateEmail",validator.validateEmail);
 
 

@@ -16,13 +16,24 @@ const auth = async (req, res, next) => {
             throw new Error()
         }
 
+         
+
         
         req.token = token
         req.user = user*/
+        console.log(req.session);
+        if(decoded.sEmail == req.session.email || req.session.uType == "user" || user.uType == "user"){
         console.log("user :   ",user);
         //console.log("users : ",users);
         console.log(decoded);
         next()
+        }
+        else{
+            return res.status(400).json({
+                message:"You are unauthorized or loggedout"
+            })
+        }
+
     } catch (e) {
         console.log(e);
 

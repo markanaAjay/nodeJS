@@ -12,8 +12,9 @@ const auth = async (req, res, next) => {
         let decoded = jwt.verify(token, "avm");
         const user = await User.findOne({ sEmail: decoded.email})
 
+        console.log(req.session);
         if(decoded.sEmail == req.session.email || req.session.uType == "admin" || user.uType == "admin"){
-        console.log("user :   ",user);
+        //console.log("user :   ",user);
         //console.log("users : ",users);
         console.log(decoded);
         next()
