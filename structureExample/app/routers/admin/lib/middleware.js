@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
         token = String(token)
 
 
-        let decoded = jwt.verify(token, "avm");
+        let decoded = await jwt.verify(token, "avm");
         const user = await User.findOne({ sEmail: decoded.email})
 
         console.log(req.session);
