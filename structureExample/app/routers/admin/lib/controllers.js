@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const adminControllers = {}
 
 adminControllers.getData = async(req,res)=>{
+	console.log("Hello From Admin controller");
 	try{
 
 		const data = await User.aggregate([{
@@ -24,11 +25,13 @@ adminControllers.getData = async(req,res)=>{
 		},
 	]);
         console.log(data);
+		const response = {
+			data :data,
+			recordsFiltered: data.length,
+        	recordsTotal: data.length
+		}
 				
-		return res.status(200).json({
-            message:"Admin",
-            data:data
-        });
+		return res.status(200).send(response);
 	}
 	catch(error) {
 		return res.status(400).send(error);

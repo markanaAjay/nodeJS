@@ -9,9 +9,9 @@ const updateControllers = {};
 updateControllers.update = async(req,res) =>{
 	try{
 
-        console.log(req.body);
+        console.log("body : ",req.body);
        
-        const data =await  User.findOneAndUpdate({"sEmail": req.body.email}, {$set:{"sName":req.body.name}});
+        const data =await  User.findOneAndUpdate({"sEmail": req.body.sEmail}, {$set:{"sName":req.body.sName}});
         console.log("data : ",data);
 
         if(!data){

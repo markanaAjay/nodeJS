@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
+const path = require('path');
 const session = require('express-session');
 const bodyParser = require("body-parser");
 const {router} = require("./route")
+const  {renderRouter} = require("./render");
+
 
 const port = process.env.PORT || 8000;
 
@@ -22,13 +25,16 @@ app.use(session({
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("./seeds"));
+app.set("views", path.join(__dirname, "../../seeds/"));
+app.set("view engine", "ejs");
 
+app.use("/api/v1", router);
+app.use("/user", renderRouter);
 
 Connection.prototype.initialize = function(){
 
     app.listen(port,() => {
-    app.use("/api/v1", router);
-
 	console.log("server is running");
 });
 

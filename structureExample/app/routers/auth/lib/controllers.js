@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const { json } = require("express");
 const jwt = require("jsonwebtoken");
 const session = require('express-session');
+require("dotenv").config();
 
 const userControllers = {};
 
@@ -59,20 +60,20 @@ userControllers.signIn = async (req, res) => {
         if (result2) {
             const token =await jwt.sign({
                 email: result[0].email
-            }, 'avm', {
+            }, process.env.JWT_SECRET, {
                 expiresIn: "24h"
             })
             console.log(token);
 
-            req.session["tokne"] = token;
+            req.session["token"] = token;
             req.session["email"] = req.body.email;
             req.session["uType"] = result[0].uType;
             console.log(req.session);
-            let decoded = jwt.verify(token, "avm");
-            console.log("Decode From Controller : ",decoded);
+           
             return res.status(200).send({
                 message:"You are authenticated",
                 token:token,
+                uType:req.session.uType
             })
         }
     })

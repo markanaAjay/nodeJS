@@ -1,5 +1,5 @@
 const express = require("express");
-const userData = require("../../../models");
+const {User} = require("../../../models/");
 const { json } = require("express");
 const jwt = require("jsonwebtoken");
 const session = require('express-session');
@@ -10,7 +10,7 @@ validator.validateEmail = async(req,res) =>{
     try{
         
         console.log("emails : ",req.body.email);
-        let data =await  userData.findOne({sEmail:req.body.email});
+        let data =await  User.findOne({sEmail:req.body.email});
         console.log("data : ",data);
 
         if(!data){
