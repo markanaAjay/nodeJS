@@ -27,15 +27,21 @@ userControllers.signUp = async (req, res) => {
             console.log("oUser : ",oUser);
              if (req.body.password == req.body.confirmPassword) {
                 await oUser.save().then((result, err) => {
-                 	console.log("result : ",result);
-                     return res.status(200).json({
-                        message:"you are registered"
-                     });
+                 	console.log("oResult : ",result);
+                        return res.status(200).json({
+                            message:"You are registered",
+                            data:oUser
+                        })
+                        //return res.reply(messages.successfully("You are Register"),oUser)
+
                  })
                 }
              else {
-                 return res.status(401).send("password is not matching")
-             }
+                return res.status(400).json({
+                    message:"Passsword is not matching"
+                })
+                //return res.reply(messages.not_found("Password is not matching"))
+            }
 
        }
      })
@@ -43,38 +49,43 @@ userControllers.signUp = async (req, res) => {
 
 userControllers.signIn = async (req, res) => {
 
-    var result = await User.find({ sEmail: req.body.email })
-    console.log("result : ",result[0].uType);
-    if (result.length < 1) {
+    var oResult = await User.find({ sEmail: req.body.email })
+    console.log("oResult : ",oResult[0].uType);
+    if (oResult.length < 1) {
         return res.status(401).json({
             msg: "user not exist"
         })
     }
-    bcrypt.compare(req.body.password, result[0].sPassword,async (err, result2) => {
-        if (!result2) {
+    bcrypt.compare(req.body.password, oResult[0].sPassword,async (err, result) => {
+        if (!result) {
             return res.status(401).json({
                 msg: "password matching is fail"
             })
         }
 
-        if (result2) {
-            const token =await jwt.sign({
-                email: result[0].email
+        if (result) {
+            const sToken =await jwt.sign({
+                email: oResult[0].sEmail
             }, process.env.JWT_SECRET, {
                 expiresIn: "24h"
             })
-            console.log(token);
+            console.log(sToken);
 
-            req.session["token"] = token;
+            req.session["token"] = sToken;
             req.session["email"] = req.body.email;
-            req.session["uType"] = result[0].uType;
+            req.session["uType"] = oResult[0].uType;
             console.log(req.session);
-           
-            return res.status(200).send({
-                message:"You are authenticated",
-                token:token,
-                uType:req.session.uType
+
+            let oDecoded = await jwt.verify(sToken, process.env.JWT_SECRET);
+            console.log("oDecoded : ",oDecoded);
+
+            return res.status(200).json({
+                message:"You are loggedin",
+                token:sToken,
+                uType:oResult[0].uType                
             })
+            //return res.reply(messages.successfully("You are loggedin"),sToken)
+
         }
     })
    
@@ -85,8 +96,10 @@ userControllers.logOut = async(req,res) => {
     req.session.destroy();
 
     return res.status(200).json({
-        message:"You are loggedOut"
+        message:"You are logged out"
     })
+    //return res.reply(messages.successfully("You are loggedout"))
+
 
 }
 

@@ -4,12 +4,12 @@ const {User} = require('../../../models/');
 const auth = async (req, res, next) => {
     try {
         //const token = req.headers["token"];
-        let token = req.header('Authorization');
+        let sToken = req.header('Authorization');
         //let token = req.session.token;
-        console.log(token);
-        token = String(token)
-        let decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ sEmail: decoded.email})
+        console.log(sToken);
+        sToken = String(sToken)
+        let oDecoded = jwt.verify(sToken, process.env.JWT_SECRET);
+        const oUser = await User.findOne({ sEmail: oDecoded.email})
 
         //const users = await {email:verified.email};  
         /*if (!user) {
@@ -22,10 +22,10 @@ const auth = async (req, res, next) => {
         req.token = token
         req.user = user*/
         console.log(req.session);
-        if(decoded.sEmail == req.session.email || req.session.uType == "user" || user.uType == "user"){
-        console.log("user :   ",user);
+        if(oDecoded.sEmail == req.session.email || req.session.uType == "user" || oUser.uType == "user"){
+        console.log("user :   ",oUser);
         //console.log("users : ",users);
-        console.log(decoded);
+        console.log(oDecoded);
         next()
         }
         else{

@@ -71,7 +71,7 @@
             data: data,
             success:function(result,status,xhr){
               console.log("result =>>>> : ",result);
-              localStorage.setItem("token",result);
+              localStorage.setItem("token :::",result);
 
               /*let tokenData = localStorage.getItem("token");
               console.log("tokendata : ",tokenData);*/
@@ -90,7 +90,7 @@
               else{
                 setTimeout(() =>{
                   window.location.assign("http://localhost:8000/user/admin/userData");
-                })
+                },2000)
               }
 
 

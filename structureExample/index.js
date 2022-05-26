@@ -5,6 +5,10 @@ const bodyParser = require("body-parser");
 const port = process.env.PORT || 8000;
 const {MongoDB} = require("./app/utils/");
 const Connection = require("./app/routers/");
+require('./globals');
+require('dotenv').config();
+
+
 
 MongoDB.initialize();
 

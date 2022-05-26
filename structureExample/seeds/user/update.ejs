@@ -84,6 +84,7 @@
                 url:"/api/v1/auth/logOut",
                 success:function(result,status,xhr){
                   console.log(result);
+                  localStorage.clear();
                   swal({
                     title: "logged out !",
                     text: "You are successfully logged out!",

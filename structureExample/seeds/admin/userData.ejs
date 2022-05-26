@@ -66,6 +66,44 @@
               ]
              
               })
+              var data;
+
+                $('#tableData tbody').on( 'click', 'tr', function () {
+                    console.log(table.row(this).data());
+                    data = table.row(this).data();
+                    if ( $(this).hasClass('selected') ) {
+                        $(this).removeClass('selected');
+                    }
+                    else {
+                        table.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                    }
+                });
+
+                $("#tableData").on("click",".btnclass",function(e){
+                    console.log("Data2 : ",data);
+                    let name = {
+                        Name : data.sName
+                    }
+                    console.log(name);
+
+                    $.ajax({
+                        type:"delete",
+                        url:"/api/v1/admin/adminData/delete",
+                        data:name,
+
+                        success:function(result,status,xhr){
+                            table.ajax.reload();
+    
+                            console.log(result);
+                        },
+                        error: function(error){
+                            console.log(error);
+                            alert("error")           
+                        }
+                })
+
+            })
 
 
             })
@@ -75,6 +113,7 @@
                 url:"/api/v1/auth/logOut",
                 success:function(result,status,xhr){
                   console.log(result);
+                  localStorage.clear();
                   swal({
                     title: "logged out !",
                     text: "You are successfully logged out!",
@@ -96,7 +135,6 @@
               })
 
           })
-
              
           </script>
 

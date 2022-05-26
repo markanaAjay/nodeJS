@@ -9,5 +9,6 @@ const {userControllers} = require("../auth/lib/controllers");
 
 adRouter.get("/adminData",middleware,adminControllers.getData);
 adRouter.get("/adminlogin",userControllers.signIn);
+adRouter.delete("/adminData/delete",adminControllers.delete);
 
 module.exports = {adRouter};

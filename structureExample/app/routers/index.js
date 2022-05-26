@@ -32,13 +32,26 @@ app.set("view engine", "ejs");
 app.use("/api/v1", router);
 app.use("/user", renderRouter);
 
+/*Connection.prototype.setupMiddleware = function () {
+         app.use(this.routeConfig);
+};
+Connection.prototype.routeConfig = function (req, res, next) {
+    // req.sRemoteAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    if (req.path === "/ping") return res.status(200).send({});
+    res.reply = ({ code, message }, data = {}, header = undefined) => {
+        res.status(code).header(header).json({ message, data });
+    };
+    next();
+};*/
+
 Connection.prototype.initialize = function(){
 
     app.listen(port,() => {
-	console.log("server is running");
+	    console.log("server is running");
 });
 
 }
+
 
 module.exports = new Connection();
 

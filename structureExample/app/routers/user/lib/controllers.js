@@ -11,11 +11,11 @@ updateControllers.update = async(req,res) =>{
 
         console.log("body : ",req.body);
        
-        const data =await  User.findOneAndUpdate({"sEmail": req.body.sEmail}, {$set:{"sName":req.body.sName}});
-        console.log("data : ",data);
+        const oData =await  User.findOneAndUpdate({"sEmail": req.body.sEmail}, {$set:{"sName":req.body.sName}});
+        console.log("data : ",oData);
 
-        if(!data){
-        	console.log(data);
+        if(!oData){
+        	console.log(oData);
         	return res.status(404).send("Error");
         }
         else{
